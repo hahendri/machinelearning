@@ -31,7 +31,7 @@ testfileURL <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.
         download.file(testfileURL, destfile = "./data/hartestdata.csv", method = "curl")
 traindata <- read.csv("./data/hartraindata.csv")
 testdata <- read.csv("./data/hartestdata.csv")
-# Set Seed and Create validation set
+# Set Seed and create train and validation set from train data
 set.seed(1234)
 intrain <- createDataPartition(y = traindata$classe, p = 0.90, list = FALSE)
 training <- traindata[intrain,]
@@ -64,3 +64,21 @@ modelnb <- train(classe ~ roll_belt + pitch_belt + yaw_belt + total_accel_belt +
                   yaw_dumbbell + total_accel_dumbbell + roll_forearm + pitch_forearm + 
                   yaw_forearm + total_accel_forearm, data = training, method = "nb",
                   trControl = controlcv)
+#Predictions on validation set
+predtree <- predict(modeltree, validation)
+predrf <- predict(modelrf, validation)
+predgbm <- predict(modelgbm, validation)
+prednb <- predict(modelnb, validation)
+#Out of sample error rates with caret confusionMatrix
+validation$predtreeRight <- predtree==validation$classe
+cmtree <- table(predtree, validation$classe)
+validation$predrfRight <- predrf==validation$classe
+cmrf <- table(predrf, validation$classe)
+validation$predgbmRight <- predgbm==validation$classe
+cmgbm <- table(predgbm, validation$classe)
+validation$predtnbRight <- prednb==validation$classe
+cmnb <- table(prednb, validation$classe)
+confusionMatrix(cmtree)
+confusionMatrix(cmrf)
+confusionMatrix(cmgbm)
+confusionMatrix(cmnb)
