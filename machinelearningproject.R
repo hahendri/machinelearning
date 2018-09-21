@@ -82,3 +82,5 @@ confusionMatrix(cmtree)
 confusionMatrix(cmrf)
 confusionMatrix(cmgbm)
 confusionMatrix(cmnb)
+#Using models on validation set showed that the modelrf is the best model to
+#predict on test set.
