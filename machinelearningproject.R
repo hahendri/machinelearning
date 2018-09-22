@@ -39,7 +39,7 @@ validation <- traindata[-intrain,]
 #Set cross validation method for 10-Fold
 controlcv <- trainControl(method = "cv", number = 10, savePredictions = "all", classProbs = TRUE)
 #Out of 159 predictor variables, I choose predictors that most likely would predict form of movement
-#and choose a manageable number of predictors to keep the model simple for processing.
+#and chose a manageable number of predictors to keep the model simple for processing.
 #Train Tree Model
 modeltree <- train(classe ~ roll_belt + pitch_belt + yaw_belt + total_accel_belt + roll_arm + 
                   pitch_arm + yaw_arm + total_accel_arm + roll_dumbbell + pitch_dumbbell + 
